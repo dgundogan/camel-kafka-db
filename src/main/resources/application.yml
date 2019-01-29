@@ -60,7 +60,7 @@ mailto: xyz@gmail.com
 mailFrom: xyz@gmail.com
 message:   Hello from DEV Profile
 fromRoute: kafka:inputItemTopic?brokers=localhost:9092&groupId=itemDev&autoOffsetReset=earliest&consumersCount=1
-toRoute:  log:?level=INFO&showBody=true
+toRoute:  jdbc:dataSource
 healthRoute: timer:health?period=10s
 errorRoute: kafka:errorTopic?brokers=localhost:9092
 
