@@ -34,5 +34,6 @@ public void process(Exchange exchange) throws Exception {
 
         log.info("Final Query is " + query);
         exchange.getIn().setBody(query.toString());
+        exchange.getIn().setHeader("skuId",item.getSku());
     }
 }

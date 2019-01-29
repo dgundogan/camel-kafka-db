@@ -38,6 +38,7 @@ fromRoute: direct:input
 toRoute: mock:output
 healthRoute: direct:health
 errorRoute: mock:output
+selectNode: mock:output
 
 ---
 
@@ -59,10 +60,11 @@ spring:
 mailto: xyz@gmail.com
 mailFrom: xyz@gmail.com
 message:   Hello from DEV Profile
-fromRoute: kafka:inputItemTopic?brokers=localhost:9092&groupId=itemDev&autoOffsetReset=earliest&consumersCount=1
+fromRoute: kafka:inputItemTopic?brokers=localhost:9092&groupId=itemDev&autoOffsetReset=earliest&consumersCount=3
 toRoute:  jdbc:dataSource
 healthRoute: timer:health?period=10s
 errorRoute: kafka:errorTopic?brokers=localhost:9092
+selectNode: sql:select * from ITEMS where sku = :#skuId?dataSource=#dataSource
 
 ---
 

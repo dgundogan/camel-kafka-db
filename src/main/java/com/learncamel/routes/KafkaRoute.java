@@ -64,7 +64,9 @@ public class KafkaRoute extends RouteBuilder{
                 .log("Unmarshaled message is ${body}")
                 .process(validateDataProcessor)
                 .process(buildSQLProcessor)
-                .to("{{toRoute}}");
+                .to("{{toRoute}}")
+                .to("{{selectNode}}")
+                .log("Read Item from DB is ${body}");
 
         }
 }

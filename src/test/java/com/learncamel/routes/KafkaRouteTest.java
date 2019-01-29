@@ -1,6 +1,7 @@
 package com.learncamel.routes;
 
 import org.apache.camel.CamelContext;
+import org.apache.camel.CamelExecutionException;
 import org.apache.camel.ConsumerTemplate;
 import org.apache.camel.ProducerTemplate;
 import org.apache.camel.builder.RouteBuilder;
@@ -56,8 +57,26 @@ public class KafkaRouteTest extends CamelTestSupport {
     }
 
    @Test
-    public void simpleTestCase(){
-       assertTrue(true);
+    public void kafkaRoute(){
+       String input = "{\"transactionType\":\"ADD\",\"sku\":\"100\",\"itemDescription\":\"Samsung TV\", \"price\":\"500.00\"}";
+
+       String response = (String) producerTemplate.requestBody("kafka:inputItemTopic?brokers=localhost:9092",input);
+
+       assertNotNull(response);
+
    }
+
+    @Test(expected = CamelExecutionException.class)
+    public void kafkaRoute_error(){
+        String input = "{\"transactionType\":\"ADD\",\"sku\":\"\",\"itemDescription\":\"Samsung TV\", \"price\":\"500.00\"}";
+
+        producerTemplate.sendBody("kafka:inputItemTopic?brokers=localhost:9092",input);
+
+        String response = (String)consumerTemplate.receiveBody("kafka:errorTopic?brokers=localhost:9092");
+
+        System.out.println("Response is :"+response);
+        assertNotNull(response);
+
+    }
 
 }

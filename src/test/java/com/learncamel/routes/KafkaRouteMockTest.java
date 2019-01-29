@@ -69,4 +69,5 @@ public class KafkaRouteMockTest extends CamelTestSupport{
         Item item = (Item)producerTemplate.requestBodyAndHeader(environment.getProperty("fromRoute"), input, "env", "mock");
     }
 
+
 }
